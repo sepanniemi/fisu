@@ -39,7 +39,8 @@ final class MMLTileOverlay: MKTileOverlay, @unchecked Sendable {
         at path: MKTileOverlayPath,
         result: @escaping (Data?, Error?) -> Void
     ) {
-        let key = "\(layer)/\(path.z)/\(path.x)/\(path.y)"
+        // Key mirrors URL path order: z/y/x (TileMatrix/TileRow/TileCol)
+        let key = "\(layer)/\(path.z)/\(path.y)/\(path.x)"
         if let cached = cache.data(forKey: key) {
             result(cached, nil)
             return

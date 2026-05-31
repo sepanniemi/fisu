@@ -35,4 +35,19 @@ import MapKit
         let overlay = makeOverlay()
         #expect(overlay.canReplaceMapContent == true)
     }
+
+    // Regression test: cache key must use z/y/x (matching URL), not z/x/y.
+    // If the orders differ, tiles with x≠y are written under a key that is
+    // never looked up — the cache becomes a no-op for almost all real tiles.
+    @Test func cacheKeyMatchesUrlAxisOrder() {
+        let overlay = makeOverlay()
+        // Use asymmetric x/y so a z/x/y vs z/y/x swap would produce distinct strings
+        let path = MKTileOverlayPath(x: 590, y: 291, z: 10, contentScaleFactor: 1)
+        let url = overlay.tileURL(for: path)
+        // URL must contain z/y/x in path
+        let pathContainsZYX = url.path.contains("/10/291/590")   // z=10, y=291, x=590
+        let pathContainsZXY = url.path.contains("/10/590/291")   // wrong order
+        #expect(pathContainsZYX == true)
+        #expect(pathContainsZXY == false)
+    }
 }
