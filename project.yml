@@ -39,5 +39,6 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: fi.fisu.tests
+        GENERATE_INFOPLIST_FILE: YES
     dependencies:
       - target: Fisu
