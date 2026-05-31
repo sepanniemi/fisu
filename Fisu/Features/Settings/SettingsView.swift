@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Environment(AppSettings.self) private var appSettings
+    @AppStorage(AppSettings.apiKeyDefaultsKey) private var savedKey = ""
     @State private var apiKey = ""
     @AppStorage("keepScreenAwake") private var keepScreenAwake = true
 
@@ -15,12 +15,10 @@ struct SettingsView: View {
                         SecureField("api-key", text: $apiKey)
                             .autocorrectionDisabled()
                             .textInputAutocapitalization(.never)
-                            .onSubmit { appSettings.mmlApiKey = apiKey }
+                            .onSubmit { commitKey() }
                     }
-                    Button("Save API Key") {
-                        appSettings.mmlApiKey = apiKey
-                    }
-                    .disabled(apiKey.trimmingCharacters(in: .whitespaces) == appSettings.mmlApiKey)
+                    Button("Save API Key") { commitKey() }
+                        .disabled(apiKey.trimmingCharacters(in: .whitespaces) == savedKey)
 
                     Text("© Maanmittauslaitos — open data licence")
                         .font(.caption)
@@ -50,7 +48,12 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
-            .onAppear { apiKey = appSettings.mmlApiKey }
+            .onAppear { apiKey = savedKey }
         }
+    }
+
+    private func commitKey() {
+        AppSettings.saveApiKey(apiKey)
+        savedKey = apiKey.trimmingCharacters(in: .whitespaces)
     }
 }

@@ -6,8 +6,8 @@ struct MapScreen: View {
     @Environment(TripRecorder.self) private var recorder
     @Environment(LocationService.self) private var locationService
     @Environment(CatchStore.self) private var catchStore
-    @Environment(AppSettings.self) private var appSettings
     @Query private var catches: [Catch]
+    @AppStorage(AppSettings.apiKeyDefaultsKey) private var apiKey = ""
     @State private var displayMode: CatchDisplayMode = .dots
     @State private var showCapture = false
     @State private var selectedEntry: Catch?
@@ -20,7 +20,7 @@ struct MapScreen: View {
                 catches: displayMode == .hidden ? [] : catches,
                 displayMode: displayMode,
                 routePoints: recorder.routePoints,
-                apiKey: appSettings.mmlApiKey,
+                apiKey: apiKey,
                 onCatchSelected: { entry in
                     selectedEntry = entry
                 },
@@ -75,8 +75,12 @@ struct MapScreen: View {
             }
         }
         .onAppear {
+            // Sync Keychain → UserDefaults on first launch so @AppStorage picks it up.
+            if apiKey.isEmpty, let saved = KeychainStore.mmlApiKey {
+                apiKey = saved
+            }
             locationService.requestWhenInUse()
-            if appSettings.mmlApiKey.isEmpty { showOnboarding = true }
+            if apiKey.isEmpty { showOnboarding = true }
         }
         .onChange(of: locationService.location) { _, location in
             guard let location else { return }
