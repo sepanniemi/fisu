@@ -21,6 +21,8 @@ targets:
         INFOPLIST_FILE: Fisu/Info.plist
         CODE_SIGN_ENTITLEMENTS: Fisu/Fisu.entitlements
         DEVELOPMENT_TEAM: ""   # fill in your 10-char team ID
+    dependencies:
+      - sdk: PhotosUI.framework
   FisuTests:
     type: bundle.unit-test
     platform: iOS
