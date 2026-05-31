@@ -1,7 +1,7 @@
 import MapKit
 
 final class MMLTileOverlay: MKTileOverlay, @unchecked Sendable {
-    private let apiKey: String
+    let apiKey: String
     private let layer: String
     private let tileMatrixSet: String
     private let cache: TileCache

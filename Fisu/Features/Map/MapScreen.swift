@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct MapScreen: View {
     @Environment(TripRecorder.self) private var recorder
@@ -11,8 +12,8 @@ struct MapScreen: View {
     @State private var selectedEntry: Catch?
     @State private var navigateToDetail = false
     @State private var showOnboarding = false
-
-    private var apiKey: String { KeychainStore.mmlApiKey ?? "" }
+    // Stored as @State so changes from Settings force a MapContainerView update.
+    @State private var apiKey: String = KeychainStore.mmlApiKey ?? ""
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -75,8 +76,12 @@ struct MapScreen: View {
             }
         }
         .onAppear {
+            apiKey = KeychainStore.mmlApiKey ?? ""
             locationService.requestWhenInUse()
             if apiKey.isEmpty { showOnboarding = true }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            apiKey = KeychainStore.mmlApiKey ?? ""
         }
         .onChange(of: locationService.location) { _, location in
             guard let location else { return }
