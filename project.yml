@@ -1,0 +1,43 @@
+name: Fisu
+options:
+  bundleIdPrefix: fi.fisu
+  deploymentTarget:
+    iOS: "26.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: 6.2
+    SWIFT_STRICT_CONCURRENCY: complete
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+targets:
+  Fisu:
+    type: application
+    platform: iOS
+    sources:
+      - Fisu
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: fi.fisu.app
+        INFOPLIST_FILE: Fisu/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Fisu/Fisu.entitlements
+        DEVELOPMENT_TEAM: ""   # fill in your 10-char team ID
+    info:
+      path: Fisu/Info.plist
+      properties:
+        CFBundleDisplayName: Fisu
+        NSLocationWhenInUseUsageDescription: "Fisu uses your location to pin catches to the exact spot you caught them."
+        NSLocationAlwaysAndWhenInUseUsageDescription: "When a trip is active, Fisu records your route in the background. Location is used only while tracking."
+        NSCameraUsageDescription: "Fisu uses your camera to photograph your catches."
+        UIBackgroundModes:
+          - location
+        UILaunchScreen: {}
+  FisuTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - FisuTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: fi.fisu.tests
+    dependencies:
+      - target: Fisu
