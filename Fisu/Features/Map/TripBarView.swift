@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct TripBarView: View {
     @Environment(TripRecorder.self) private var recorder
@@ -14,6 +15,10 @@ struct TripBarView: View {
         }
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14))
         .shadow(color: .black.opacity(0.18), radius: 8, y: 2)
+        .onChange(of: recorder.state) { _, state in
+            let keepAwake = UserDefaults.standard.bool(forKey: "keepScreenAwake")
+            UIApplication.shared.isIdleTimerDisabled = (state == .recording && keepAwake)
+        }
     }
 
     private var startBar: some View {

@@ -78,6 +78,10 @@ struct MapScreen: View {
             locationService.requestWhenInUse()
             if apiKey.isEmpty { showOnboarding = true }
         }
+        .onChange(of: locationService.location) { _, location in
+            guard let location else { return }
+            recorder.appendLocation(location)
+        }
         .sheet(isPresented: $showCapture) {
             QuickCaptureSheet()
         }
