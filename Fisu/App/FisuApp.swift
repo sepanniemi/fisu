@@ -8,6 +8,7 @@ struct FisuApp: App {
     private let tripRecorder: TripRecorder
     private let catchStore: CatchStore
     private let photoService = PhotoService()
+    private let appSettings = AppSettings()
 
     init() {
         let schema = Schema([Catch.self, Trip.self])
@@ -35,6 +36,7 @@ struct FisuApp: App {
                 .environment(tripRecorder)
                 .environment(catchStore)
                 .environment(photoService)
+                .environment(appSettings)
         }
     }
 }

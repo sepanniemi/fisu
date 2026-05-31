@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    @Environment(AppSettings.self) private var appSettings
     @State private var apiKey = ""
     @Binding var isPresented: Bool
 
@@ -29,7 +30,7 @@ struct OnboardingView: View {
                 }
 
                 Button {
-                    KeychainStore.mmlApiKey = apiKey.isEmpty ? nil : apiKey
+                    appSettings.mmlApiKey = apiKey
                     isPresented = false
                 } label: {
                     Text("Continue")
