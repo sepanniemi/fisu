@@ -32,3 +32,13 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
     dependencies:
       - target: Fisu
+
+schemes:
+  Fisu:
+    build:
+      targets:
+        Fisu: all
+        FisuTests: [test]
+    test:
+      targets:
+        - FisuTests
