@@ -26,7 +26,9 @@ enum KeychainStore {
         SecItemDelete(query as CFDictionary)
         var attrs = query
         attrs[kSecValueData] = data
-        SecItemAdd(attrs as CFDictionary, nil)
+        attrs[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlock
+        let status = SecItemAdd(attrs as CFDictionary, nil)
+        assert(status == errSecSuccess, "KeychainStore: SecItemAdd failed with OSStatus \(status)")
     }
 
     private static func load(account: String) -> String? {

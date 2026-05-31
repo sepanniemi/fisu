@@ -3,7 +3,7 @@ import Foundation
 extension Catch {
     var lengthDisplay: String? {
         guard let mm = lengthMm else { return nil }
-        return "\(mm / 10) cm"
+        return "\((mm + 5) / 10) cm"
     }
 
     var weightDisplay: String? {
@@ -21,8 +21,9 @@ extension Catch {
         return FishSpeciesCatalog.displayName(for: speciesCode)
     }
 
-    var sizeDisplay: String {
-        [lengthDisplay, weightDisplay].compactMap { $0 }.joined(separator: " · ")
+    var sizeDisplay: String? {
+        let parts = [lengthDisplay, weightDisplay].compactMap { $0 }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 }
 

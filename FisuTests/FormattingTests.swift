@@ -31,4 +31,14 @@ import Testing
         let c = Catch()
         #expect(c.weightDisplay == nil)
     }
+
+    @Test func lengthRoundsUp() {
+        let c = Catch(); c.lengthMm = 785
+        #expect(c.lengthDisplay == "79 cm")
+    }
+
+    @Test func sizeDisplayNilWhenBothAbsent() {
+        let c = Catch()
+        #expect(c.sizeDisplay == nil)
+    }
 }

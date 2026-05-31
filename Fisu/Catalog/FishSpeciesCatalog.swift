@@ -9,6 +9,9 @@ struct FishSpecies: Identifiable, Sendable {
 }
 
 enum FishSpeciesCatalog {
+    // Species codes are ASCII-only (e.g. "sarki" not "särki") for safe use as DB keys.
+    private static let fallbackColor = Color(red: 0.54, green: 0.54, blue: 0.54)
+
     static let all: [FishSpecies] = [
         FishSpecies(code: "ahven",     nameFI: "Ahven",     nameEN: "Perch",         color: Color(red: 0.88, green: 0.64, blue: 0.23)),
         FishSpecies(code: "hauki",     nameFI: "Hauki",     nameEN: "Pike",          color: Color(red: 0.18, green: 0.55, blue: 0.34)),
@@ -32,12 +35,12 @@ enum FishSpeciesCatalog {
     }
 
     static func color(for code: String?) -> Color {
-        guard let code else { return Color(red: 0.54, green: 0.54, blue: 0.54) }
-        return species(for: code)?.color ?? Color(red: 0.54, green: 0.54, blue: 0.54)
+        guard let code else { return fallbackColor }
+        return species(for: code)?.color ?? fallbackColor
     }
 
     static func displayName(for code: String?) -> String {
         guard let code else { return "–" }
-        return species(for: code)?.nameFI ?? code
+        return species(for: code)?.nameFI ?? "–"
     }
 }
