@@ -64,6 +64,7 @@ final class TripRecorder {
         trip.endTime = .now
         trip.routeData = try? JSONEncoder().encode(routePoints)
         trip.distanceMeters = distanceMeters
+        try? context.save()   // explicit save — route data is too valuable to lose
         state = .idle
         activeTrip = nil
         startTime = nil
@@ -90,7 +91,7 @@ final class TripRecorder {
 
     var durationFormatted: String {
         let total = Int(duration)
-        return String(format: "%d:%02d", total / 3600, (total % 3600) / 60)
+        return String(format: "%d:%02d:%02d", total / 3600, (total % 3600) / 60, total % 60)
     }
 
     var distanceKmFormatted: String {
