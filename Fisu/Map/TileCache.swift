@@ -13,6 +13,10 @@ final class TileCache: @unchecked Sendable {
 
     func data(forKey key: String) -> Data? {
         let url = fileURL(for: key)
+        // Lock only guards the mtime touch (LRU tracking). The subsequent read is
+        // safe without the lock: atomic writes (via .atomic) use rename(2), so readers
+        // always see either the old complete file or the new complete file — never a
+        // partial write.
         lock.withLock {
             try? FileManager.default.setAttributes(
                 [.modificationDate: Date()], ofItemAtPath: url.path
@@ -37,29 +41,31 @@ final class TileCache: @unchecked Sendable {
     }
 
     private func evictIfNeeded() {
-        guard let files = try? FileManager.default.contentsOfDirectory(
-            at: directory,
-            includingPropertiesForKeys: [.fileSizeKey, .contentModificationDateKey]
-        ) else { return }
+        // Locked so two concurrent stores don't both evict based on stale state.
+        lock.withLock {
+            guard let files = try? FileManager.default.contentsOfDirectory(
+                at: directory,
+                includingPropertiesForKeys: [.fileSizeKey, .contentModificationDateKey]
+            ) else { return }
 
-        let totalSize = files.compactMap {
-            try? $0.resourceValues(forKeys: [.fileSizeKey]).fileSize
-        }.reduce(0, +)
+            // Single pass: collect (url, size, date) to avoid double metadata reads.
+            let entries: [(url: URL, size: Int, date: Date)] = files.compactMap { url in
+                guard let values = try? url.resourceValues(forKeys: [.fileSizeKey, .contentModificationDateKey]),
+                      let size = values.fileSize,
+                      let date = values.contentModificationDate
+                else { return nil }
+                return (url, size, date)
+            }
 
-        guard totalSize > maxBytes else { return }
+            let totalSize = entries.reduce(0) { $0 + $1.size }
+            guard totalSize > maxBytes else { return }
 
-        let sorted = files.sorted {
-            let d1 = (try? $0.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast
-            let d2 = (try? $1.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate) ?? .distantPast
-            return d1 < d2
-        }
-
-        var remaining = totalSize
-        for file in sorted {
-            guard remaining > maxBytes else { break }
-            if let size = try? file.resourceValues(forKeys: [.fileSizeKey]).fileSize {
-                try? FileManager.default.removeItem(at: file)
-                remaining -= size
+            let sorted = entries.sorted { $0.date < $1.date }  // oldest first
+            var remaining = totalSize
+            for entry in sorted {
+                guard remaining > maxBytes else { break }
+                try? FileManager.default.removeItem(at: entry.url)
+                remaining -= entry.size
             }
         }
     }
