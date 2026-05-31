@@ -1,0 +1,33 @@
+# Build output
+build/
+DerivedData/
+*.xcarchive
+*.ipa
+*.dSYM.zip
+
+# Generated Xcode project (managed by xcodegen)
+*.xcodeproj/
+*.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+
+# Xcode user state
+xcuserdata/
+*.xcscmblueprint
+
+# Local xcconfig files (may contain secrets)
+Local.xcconfig
+*.local.xcconfig
+
+# MML api-key (never commit)
+Secrets.xcconfig
+
+# CocoaPods / SPM caches
+Pods/
+.build/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Superpowers visual companion
+.superpowers/
