@@ -22,6 +22,8 @@
 	<string>1</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Fisu uses your camera to photograph your catches.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Fisu accesses your photo library so you can attach a photo to your catch.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>When a trip is active, Fisu records your route in the background. Location is used only while tracking.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

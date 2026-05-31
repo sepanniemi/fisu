@@ -21,16 +21,6 @@ targets:
         INFOPLIST_FILE: Fisu/Info.plist
         CODE_SIGN_ENTITLEMENTS: Fisu/Fisu.entitlements
         DEVELOPMENT_TEAM: ""   # fill in your 10-char team ID
-    info:
-      path: Fisu/Info.plist
-      properties:
-        CFBundleDisplayName: Fisu
-        NSLocationWhenInUseUsageDescription: "Fisu uses your location to pin catches to the exact spot you caught them."
-        NSLocationAlwaysAndWhenInUseUsageDescription: "When a trip is active, Fisu records your route in the background. Location is used only while tracking."
-        NSCameraUsageDescription: "Fisu uses your camera to photograph your catches."
-        UIBackgroundModes:
-          - location
-        UILaunchScreen: {}
   FisuTests:
     type: bundle.unit-test
     platform: iOS
