@@ -17,7 +17,7 @@ final class MMLTileOverlay: MKTileOverlay, @unchecked Sendable {
         self.tileMatrixSet = tileMatrixSet
         self.cache = cache
         super.init(urlTemplate: nil)
-        canReplaceMapContent = true
+        canReplaceMapContent = false   // overlay on top; full replacement caused blank map on tile errors
         minimumZ = 0
         maximumZ = 15
         tileSize = CGSize(width: 256, height: 256)

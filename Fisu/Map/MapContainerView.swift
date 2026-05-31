@@ -32,6 +32,12 @@ struct MapContainerView: UIViewRepresentable {
         )
         map.setRegion(finland, animated: false)
 
+        // If a key is already available at launch, install the overlay immediately.
+        if !apiKey.isEmpty {
+            map.addOverlay(mmlOverlay(for: apiKey), level: .aboveLabels)
+            print("[Fisu] MML overlay added at makeUIView, key prefix: \(apiKey.prefix(6))…")
+        }
+
         return map
     }
 
@@ -41,23 +47,30 @@ struct MapContainerView: UIViewRepresentable {
         context.coordinator.syncRoute(mapView: map, routePoints: routePoints)
     }
 
-    // Adds the MML tile overlay when a key is available; removes it when the key is cleared.
-    // Called on every updateUIView so Settings changes take effect without restarting.
-    private func syncOverlay(_ map: MKMapView) {
-        let existing = map.overlays.compactMap { $0 as? MMLTileOverlay }
-        if apiKey.isEmpty {
-            map.removeOverlays(existing)
-            return
-        }
-        // Already present with the same key — nothing to do.
-        if existing.first?.apiKey == apiKey { return }
-        // Remove stale overlay (key changed) then add fresh one.
-        map.removeOverlays(existing)
+    private func mmlOverlay(for key: String) -> MMLTileOverlay {
         let cacheDir = FileManager.default
             .urls(for: .cachesDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("mml_tiles")
-        let overlay = MMLTileOverlay(apiKey: apiKey, cache: TileCache(directory: cacheDir))
-        // .aboveRoads is correct for canReplaceMapContent = true so MapKit suppresses its own tiles.
-        map.addOverlay(overlay, level: .aboveRoads)
+        return MMLTileOverlay(apiKey: key, cache: TileCache(directory: cacheDir))
+    }
+
+    private func syncOverlay(_ map: MKMapView) {
+        let existing = map.overlays.compactMap { $0 as? MMLTileOverlay }
+
+        if apiKey.isEmpty {
+            if !existing.isEmpty {
+                map.removeOverlays(existing)
+                print("[Fisu] MML overlay removed (key cleared)")
+            }
+            return
+        }
+
+        if existing.first?.apiKey == apiKey {
+            return  // already installed with the right key
+        }
+
+        map.removeOverlays(existing)
+        map.addOverlay(mmlOverlay(for: apiKey), level: .aboveLabels)
+        print("[Fisu] MML overlay added/updated in updateUIView, key prefix: \(apiKey.prefix(6))…")
     }
 }
