@@ -54,10 +54,10 @@
   <!-- ── ROD ────────────────────────────────────────────────────── -->
   <!-- Main rod body  (lower-left → upper-right) -->
   <line x1="108" y1="910" x2="820" y2="148"
-        stroke="url(#rodGrad)" stroke-width="24" stroke-linecap="round"/>
+        stroke="url(#rodGrad)" stroke-width="40" stroke-linecap="round"/>
   <!-- Highlight stripe -->
   <line x1="110" y1="908" x2="822" y2="146"
-        stroke="#7a4420" stroke-width="7" stroke-linecap="round" opacity="0.45"/>
+        stroke="#7a4420" stroke-width="12" stroke-linecap="round" opacity="0.45"/>
 
   <!-- Rod guides (small rings along the blank) -->
   <!-- guide near reel -->
@@ -122,64 +122,66 @@
            transform="rotate(-35,420,530)"/>
 
   <!-- ── TANGLED FISHING LINES ──────────────────────────────────── -->
-  <!-- Dense pile of tangled monofilament over the reel. Reel center: 490,598 -->
+  <!-- All tangles concentrated ABOVE the reel (y < ~410).             -->
+  <!-- Lines leave the spool top (~490,393) and tangle in the upper    -->
+  <!-- zone before reaching the rod tip. Reel face stays visible.      -->
 
-  <!-- ·· Layer 1 — wide sprawling loops that establish the outer tangle ·· -->
-  <path d="M 490 393 C 560 340 640 300 700 250 C 740 210 760 180 720 160"
-        fill="none" stroke="#dce8f8" stroke-width="3" stroke-linecap="round" opacity="0.90"/>
-  <path d="M 350 470 C 260 420 210 330 255 260 C 300 190 400 200 440 265 C 470 315 448 390 395 430"
-        fill="none" stroke="#d4e0f0" stroke-width="2.8" stroke-linecap="round" opacity="0.86"/>
-  <path d="M 620 460 C 700 400 760 370 780 420 C 800 470 760 520 700 508 C 648 496 622 466 638 448"
-        fill="none" stroke="#ccd6ea" stroke-width="2.6" stroke-linecap="round" opacity="0.82"/>
-  <path d="M 310 530 C 240 570 210 650 255 710 C 300 770 390 762 420 704 C 446 652 412 590 356 600"
-        fill="none" stroke="#c8d4e8" stroke-width="2.6" stroke-linecap="round" opacity="0.78"/>
-  <path d="M 630 700 C 690 740 720 800 695 850 C 668 900 618 888 604 848 C 590 810 622 774 656 758"
-        fill="none" stroke="#c0cce0" stroke-width="2.4" stroke-linecap="round" opacity="0.72"/>
+  <!-- ·· Wide outer loops filling the upper area ·· -->
+  <path d="M 490 400 C 440 350 340 310 260 260 C 200 220 170 170 210 140 C 250 110 320 130 360 180 C 400 228 390 300 440 340"
+        fill="none" stroke="#dce8f8" stroke-width="3" stroke-linecap="round" opacity="0.88"/>
+  <path d="M 500 395 C 560 340 660 290 740 230 C 800 180 820 130 790 100 C 760 72 700 88 660 130 C 620 170 620 240 570 280"
+        fill="none" stroke="#d8e4f6" stroke-width="2.9" stroke-linecap="round" opacity="0.84"/>
+  <path d="M 470 405 C 400 370 300 360 240 310 C 180 260 180 200 220 170 C 260 140 320 160 340 210"
+        fill="none" stroke="#d0dced" stroke-width="2.7" stroke-linecap="round" opacity="0.80"/>
+  <path d="M 510 400 C 590 360 700 340 760 290 C 820 240 830 180 800 150 C 770 120 720 132 690 168"
+        fill="none" stroke="#ccd8ea" stroke-width="2.7" stroke-linecap="round" opacity="0.78"/>
 
-  <!-- ·· Layer 2 — tighter loops crossing directly over the reel body ·· -->
-  <path d="M 420 460 C 360 400 340 470 390 510 C 430 540 490 520 510 470 C 528 424 500 380 460 390"
-        fill="none" stroke="#e0eaf8" stroke-width="2.5" stroke-linecap="round" opacity="0.88"/>
-  <path d="M 560 440 C 620 400 650 460 614 506 C 578 550 514 542 498 490 C 482 440 520 400 560 418"
-        fill="none" stroke="#d8e4f4" stroke-width="2.4" stroke-linecap="round" opacity="0.84"/>
-  <path d="M 430 640 C 380 690 390 760 440 780 C 490 800 545 768 548 718 C 550 672 514 642 474 656"
-        fill="none" stroke="#d0dced" stroke-width="2.4" stroke-linecap="round" opacity="0.80"/>
-  <path d="M 548 630 C 600 680 600 750 554 768 C 508 786 462 754 468 708 C 474 664 522 648 548 668"
-        fill="none" stroke="#c8d4e6" stroke-width="2.3" stroke-linecap="round" opacity="0.76"/>
+  <!-- ·· Mid-size loops criss-crossing the upper zone ·· -->
+  <path d="M 450 398 C 380 350 330 270 370 210 C 410 150 490 158 520 210 C 548 258 518 330 470 360"
+        fill="none" stroke="#e0eaf8" stroke-width="2.6" stroke-linecap="round" opacity="0.86"/>
+  <path d="M 530 396 C 600 348 660 270 630 210 C 600 150 524 152 498 204 C 474 252 502 326 548 356"
+        fill="none" stroke="#dce6f4" stroke-width="2.5" stroke-linecap="round" opacity="0.83"/>
+  <path d="M 440 402 C 360 368 290 300 308 238 C 326 176 402 164 440 206 C 472 242 460 308 420 340"
+        fill="none" stroke="#d8e2f2" stroke-width="2.4" stroke-linecap="round" opacity="0.79"/>
+  <path d="M 545 398 C 624 362 692 294 674 232 C 656 170 580 160 542 202 C 508 240 522 308 562 338"
+        fill="none" stroke="#d4deee" stroke-width="2.4" stroke-linecap="round" opacity="0.76"/>
 
-  <!-- ·· Layer 3 — small tight knot-like loops right on top of spool ·· -->
-  <path d="M 470 520 C 438 500 424 530 446 554 C 466 576 502 570 510 546 C 518 522 498 502 472 510"
-        fill="none" stroke="#e8f0fc" stroke-width="2.2" stroke-linecap="round" opacity="0.92"/>
-  <path d="M 510 544 C 544 522 556 548 540 572 C 524 596 492 592 484 566 C 476 542 498 524 518 534"
-        fill="none" stroke="#e4ecfa" stroke-width="2.2" stroke-linecap="round" opacity="0.88"/>
-  <path d="M 450 578 C 416 558 408 590 428 616 C 448 640 484 636 492 610 C 500 584 474 562 452 572"
-        fill="none" stroke="#e0eaf8" stroke-width="2.1" stroke-linecap="round" opacity="0.85"/>
-  <path d="M 520 600 C 558 580 568 612 550 638 C 532 662 498 656 492 630 C 486 606 508 586 528 596"
-        fill="none" stroke="#dce8f6" stroke-width="2.1" stroke-linecap="round" opacity="0.82"/>
+  <!-- ·· Tighter loops knotting up in the middle upper zone ·· -->
+  <path d="M 460 400 C 414 366 390 310 416 268 C 442 226 500 228 518 268 C 534 304 512 354 474 374"
+        fill="none" stroke="#e4ecfa" stroke-width="2.3" stroke-linecap="round" opacity="0.90"/>
+  <path d="M 522 398 C 568 364 592 308 566 266 C 540 224 482 226 464 266 C 448 302 470 352 508 372"
+        fill="none" stroke="#e0eaf8" stroke-width="2.3" stroke-linecap="round" opacity="0.87"/>
+  <path d="M 448 403 C 398 378 370 326 390 282 C 410 238 462 232 490 264 C 514 292 506 346 466 368"
+        fill="none" stroke="#dce8f6" stroke-width="2.2" stroke-linecap="round" opacity="0.84"/>
+  <path d="M 534 401 C 584 376 612 324 592 280 C 572 236 520 230 492 262 C 468 290 476 344 516 366"
+        fill="none" stroke="#d8e4f2" stroke-width="2.2" stroke-linecap="round" opacity="0.81"/>
 
-  <!-- ·· Layer 4 — crossing arcs that weave between layers ·· -->
-  <path d="M 340 480 C 370 510 430 498 440 460 C 450 424 420 394 386 406 C 354 418 344 454 362 472"
-        fill="none" stroke="#d8e2f2" stroke-width="2" stroke-linecap="round" opacity="0.78"/>
-  <path d="M 630 510 C 668 538 670 586 636 604 C 602 622 564 600 562 566 C 560 534 592 516 622 528"
-        fill="none" stroke="#d4deee" stroke-width="2" stroke-linecap="round" opacity="0.74"/>
-  <path d="M 480 430 C 520 408 550 430 544 464 C 538 496 506 508 480 492 C 456 476 452 444 472 432"
-        fill="none" stroke="#dce6f4" stroke-width="2" stroke-linecap="round" opacity="0.80"/>
-  <path d="M 460 668 C 440 700 452 738 484 746 C 516 754 546 728 540 696 C 534 664 504 652 478 664"
-        fill="none" stroke="#ccd6e8" stroke-width="2" stroke-linecap="round" opacity="0.70"/>
+  <!-- ·· Small tight knots right where line leaves the spool top ·· -->
+  <path d="M 478 400 C 452 378 444 344 462 320 C 480 296 514 298 524 322 C 532 344 518 374 492 386"
+        fill="none" stroke="#e8f2fc" stroke-width="2.1" stroke-linecap="round" opacity="0.92"/>
+  <path d="M 502 398 C 528 376 536 342 518 318 C 500 294 466 296 456 320 C 448 342 462 372 488 384"
+        fill="none" stroke="#e4eefa" stroke-width="2.1" stroke-linecap="round" opacity="0.89"/>
+  <path d="M 468 402 C 436 386 422 352 438 326 C 454 300 494 298 508 322 C 520 344 506 378 476 392"
+        fill="none" stroke="#e0ecf8" stroke-width="2"   stroke-linecap="round" opacity="0.86"/>
+  <path d="M 514 400 C 546 382 560 350 546 322 C 532 296 492 296 478 320 C 466 342 480 376 510 390"
+        fill="none" stroke="#dce8f6" stroke-width="2"   stroke-linecap="round" opacity="0.83"/>
 
-  <!-- ·· Layer 5 — short chaotic crossing segments for maximum tangle feel ·· -->
-  <path d="M 380 544 C 406 528 416 556 396 572" fill="none" stroke="#e4ecfa" stroke-width="1.9" stroke-linecap="round" opacity="0.82"/>
-  <path d="M 594 544 C 568 528 560 558 580 572" fill="none" stroke="#e0eaf8" stroke-width="1.9" stroke-linecap="round" opacity="0.78"/>
-  <path d="M 490 480 C 522 464 532 492 510 508" fill="none" stroke="#e8f0fc" stroke-width="1.8" stroke-linecap="round" opacity="0.85"/>
-  <path d="M 452 534 C 470 512 494 518 490 542" fill="none" stroke="#e4ecfa" stroke-width="1.8" stroke-linecap="round" opacity="0.80"/>
-  <path d="M 528 540 C 510 518 488 526 490 552" fill="none" stroke="#e0e8f8" stroke-width="1.8" stroke-linecap="round" opacity="0.78"/>
-  <path d="M 460 622 C 480 604 508 614 502 638" fill="none" stroke="#dce4f2" stroke-width="1.8" stroke-linecap="round" opacity="0.74"/>
-  <path d="M 520 618 C 500 602 474 614 480 638" fill="none" stroke="#d8e0ee" stroke-width="1.8" stroke-linecap="round" opacity="0.72"/>
-  <path d="M 414 600 C 400 572 420 552 442 566" fill="none" stroke="#dce6f4" stroke-width="1.8" stroke-linecap="round" opacity="0.76"/>
-  <path d="M 566 598 C 582 572 562 552 540 568" fill="none" stroke="#d8e2f0" stroke-width="1.8" stroke-linecap="round" opacity="0.74"/>
-  <path d="M 476 450 C 456 432 436 448 448 468" fill="none" stroke="#e0eaf8" stroke-width="1.7" stroke-linecap="round" opacity="0.76"/>
-  <path d="M 504 452 C 524 434 546 450 532 470" fill="none" stroke="#dce8f6" stroke-width="1.7" stroke-linecap="round" opacity="0.74"/>
-  <path d="M 362 560 C 346 538 360 514 380 524" fill="none" stroke="#d8e2f0" stroke-width="1.7" stroke-linecap="round" opacity="0.68"/>
-  <path d="M 618 558 C 636 536 622 512 602 524" fill="none" stroke="#d4deeC" stroke-width="1.7" stroke-linecap="round" opacity="0.66"/>
-  <path d="M 488 680 C 468 664 448 674 454 698" fill="none" stroke="#ccd6e6" stroke-width="1.7" stroke-linecap="round" opacity="0.66"/>
-  <path d="M 502 678 C 524 664 542 674 536 698" fill="none" stroke="#c8d2e2" stroke-width="1.7" stroke-linecap="round" opacity="0.64"/>
+  <!-- ·· Short chaotic crossing segments — bird's-nest density ·· -->
+  <path d="M 430 370 C 452 348 476 356 474 378" fill="none" stroke="#e8f2fc" stroke-width="1.9" stroke-linecap="round" opacity="0.88"/>
+  <path d="M 550 368 C 528 346 504 356 506 378" fill="none" stroke="#e4eef8" stroke-width="1.9" stroke-linecap="round" opacity="0.85"/>
+  <path d="M 490 340 C 514 318 536 328 530 352" fill="none" stroke="#e0eaf6" stroke-width="1.8" stroke-linecap="round" opacity="0.82"/>
+  <path d="M 490 340 C 466 318 444 330 450 354" fill="none" stroke="#dce6f4" stroke-width="1.8" stroke-linecap="round" opacity="0.80"/>
+  <path d="M 458 308 C 480 290 506 300 500 322" fill="none" stroke="#e4eef8" stroke-width="1.8" stroke-linecap="round" opacity="0.82"/>
+  <path d="M 522 308 C 500 290 474 302 480 324" fill="none" stroke="#e0eaf6" stroke-width="1.8" stroke-linecap="round" opacity="0.80"/>
+  <path d="M 412 320 C 438 300 462 314 454 338" fill="none" stroke="#dce6f2" stroke-width="1.7" stroke-linecap="round" opacity="0.76"/>
+  <path d="M 568 318 C 542 298 518 314 526 338" fill="none" stroke="#d8e2f0" stroke-width="1.7" stroke-linecap="round" opacity="0.74"/>
+  <path d="M 390 270 C 418 252 444 268 436 294" fill="none" stroke="#d8e4f2" stroke-width="1.7" stroke-linecap="round" opacity="0.72"/>
+  <path d="M 590 268 C 562 250 538 268 546 292" fill="none" stroke="#d4e0ee" stroke-width="1.7" stroke-linecap="round" opacity="0.70"/>
+  <path d="M 360 230 C 390 210 418 228 408 256" fill="none" stroke="#d4dff0" stroke-width="1.6" stroke-linecap="round" opacity="0.68"/>
+  <path d="M 620 228 C 590 208 562 228 572 254" fill="none" stroke="#d0dbec" stroke-width="1.6" stroke-linecap="round" opacity="0.66"/>
+  <path d="M 310 190 C 344 170 372 190 360 218" fill="none" stroke="#ccd8e8" stroke-width="1.6" stroke-linecap="round" opacity="0.62"/>
+  <path d="M 670 188 C 636 168 608 190 620 216" fill="none" stroke="#c8d4e4" stroke-width="1.6" stroke-linecap="round" opacity="0.60"/>
+  <path d="M 474 250 C 494 232 516 244 508 268" fill="none" stroke="#e0eaf6" stroke-width="1.7" stroke-linecap="round" opacity="0.78"/>
+  <path d="M 444 210 C 468 192 494 206 484 232" fill="none" stroke="#dce6f2" stroke-width="1.7" stroke-linecap="round" opacity="0.74"/>
+  <path d="M 536 210 C 512 190 488 206 498 232" fill="none" stroke="#d8e2f0" stroke-width="1.7" stroke-linecap="round" opacity="0.72"/>
 </svg>
