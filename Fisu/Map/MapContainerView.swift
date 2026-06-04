@@ -26,12 +26,6 @@ struct MapContainerView: UIViewRepresentable {
         map.register(CatchAnnotationView.self, forAnnotationViewWithReuseIdentifier: CatchAnnotationView.reuseId)
         map.register(ClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
 
-        let finland = MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 64.5, longitude: 26.0),
-            span: MKCoordinateSpan(latitudeDelta: 12, longitudeDelta: 12)
-        )
-        map.setRegion(finland, animated: false)
-
         // If a key is already available at launch, install the overlay immediately.
         if !apiKey.isEmpty {
             map.addOverlay(mmlOverlay(for: apiKey), level: .aboveLabels)

@@ -6,6 +6,7 @@ final class MapCoordinator: NSObject, MKMapViewDelegate {
     var onCatchSelected: (Catch) -> Void
     var onCatchDeselected: () -> Void
     var displayMode: CatchDisplayMode = .dots
+    var hasInitiallyCentered = false
 
     init(onCatchSelected: @escaping (Catch) -> Void, onCatchDeselected: @escaping () -> Void) {
         self.onCatchSelected = onCatchSelected
@@ -78,6 +79,16 @@ final class MapCoordinator: NSObject, MKMapViewDelegate {
         }
 
         return nil
+    }
+
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        guard !hasInitiallyCentered, let loc = userLocation.location else { return }
+        let region = MKCoordinateRegion(
+            center: loc.coordinate,
+            span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        )
+        mapView.setRegion(region, animated: true)
+        hasInitiallyCentered = true
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
