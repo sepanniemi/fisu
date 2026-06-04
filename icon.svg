@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <!-- Background: deep water, dark navy to teal -->
+    <radialGradient id="bg" cx="38%" cy="32%" r="72%">
+      <stop offset="0%" stop-color="#1c3d60"/>
+      <stop offset="100%" stop-color="#06101e"/>
+    </radialGradient>
+
+    <!-- Reel body: warm gold/bronze -->
+    <radialGradient id="reelBody" cx="36%" cy="32%" r="68%">
+      <stop offset="0%"   stop-color="#f0c84a"/>
+      <stop offset="55%"  stop-color="#c8921c"/>
+      <stop offset="100%" stop-color="#7a5408"/>
+    </radialGradient>
+
+    <!-- Spool: dark machined aluminium -->
+    <radialGradient id="spoolFill" cx="35%" cy="32%" r="65%">
+      <stop offset="0%"   stop-color="#2a3848"/>
+      <stop offset="100%" stop-color="#0c1820"/>
+    </radialGradient>
+
+    <!-- Hub cap: small gold circle -->
+    <radialGradient id="hub" cx="35%" cy="35%" r="65%">
+      <stop offset="0%"   stop-color="#f0c84a"/>
+      <stop offset="100%" stop-color="#9a6c10"/>
+    </radialGradient>
+
+    <!-- Rod: carbon dark brown -->
+    <linearGradient id="rodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#3c2010"/>
+      <stop offset="50%"  stop-color="#5a3418"/>
+      <stop offset="100%" stop-color="#1a0c04"/>
+    </linearGradient>
+
+    <!-- Drop shadow for reel -->
+    <filter id="reelShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="4" dy="12" stdDeviation="18" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Soft inner glow on reel rim -->
+    <filter id="rimGlow" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ── BACKGROUND ─────────────────────────────────────────────── -->
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+
+  <!-- Subtle depth shimmer (very faint horizontal ovals) -->
+  <ellipse cx="512" cy="820" rx="560" ry="60" fill="#0d2a42" opacity="0.25"/>
+  <ellipse cx="512" cy="920" rx="460" ry="45" fill="#0d2a42" opacity="0.18"/>
+
+  <!-- ── ROD ────────────────────────────────────────────────────── -->
+  <!-- Main rod body  (lower-left → upper-right) -->
+  <line x1="108" y1="910" x2="820" y2="148"
+        stroke="url(#rodGrad)" stroke-width="24" stroke-linecap="round"/>
+  <!-- Highlight stripe -->
+  <line x1="110" y1="908" x2="822" y2="146"
+        stroke="#7a4420" stroke-width="7" stroke-linecap="round" opacity="0.45"/>
+
+  <!-- Rod guides (small rings along the blank) -->
+  <!-- guide near reel -->
+  <g transform="translate(340,572) rotate(-52)">
+    <ellipse rx="16" ry="7" fill="none" stroke="#c8a440" stroke-width="4"/>
+  </g>
+  <!-- guide mid -->
+  <g transform="translate(560,358) rotate(-52)">
+    <ellipse rx="12" ry="5" fill="none" stroke="#c8a440" stroke-width="3.5"/>
+  </g>
+  <!-- guide near tip -->
+  <g transform="translate(696,232) rotate(-52)">
+    <ellipse rx="8"  ry="3.5" fill="none" stroke="#c8a440" stroke-width="3"/>
+  </g>
+
+  <!-- ── REEL ────────────────────────────────────────────────────── -->
+  <!-- Reel foot / seat (attaches reel to rod blank) -->
+  <rect x="408" y="540" width="150" height="44" rx="10"
+        fill="#b07c18" transform="rotate(-52,483,562)"/>
+
+  <!-- Reel outer body (main gold disc) -->
+  <circle cx="490" cy="598" r="205" fill="url(#reelBody)" filter="url(#reelShadow)"/>
+
+  <!-- Rim accent rings -->
+  <circle cx="490" cy="598" r="198" fill="none" stroke="#f8e070" stroke-width="2.5" opacity="0.55" filter="url(#rimGlow)"/>
+  <circle cx="490" cy="598" r="190" fill="none" stroke="#7a5408" stroke-width="2"   opacity="0.7"/>
+
+  <!-- Spool recess -->
+  <circle cx="490" cy="598" r="162" fill="url(#spoolFill)"/>
+
+  <!-- Monofilament wound on spool (concentric silver lines) -->
+  <circle cx="490" cy="598" r="154" fill="none" stroke="#d4dcea" stroke-width="4"   opacity="0.52"/>
+  <circle cx="490" cy="598" r="143" fill="none" stroke="#cad2e2" stroke-width="3.5" opacity="0.46"/>
+  <circle cx="490" cy="598" r="132" fill="none" stroke="#c0c8d8" stroke-width="3.5" opacity="0.40"/>
+  <circle cx="490" cy="598" r="121" fill="none" stroke="#b8c0d0" stroke-width="3"   opacity="0.34"/>
+  <circle cx="490" cy="598" r="110" fill="none" stroke="#b0b8c8" stroke-width="3"   opacity="0.28"/>
+
+  <!-- Spool hub ring -->
+  <circle cx="490" cy="598" r="58" fill="url(#reelBody)"/>
+  <circle cx="490" cy="598" r="50" fill="#141e2c"/>
+
+  <!-- Four spokes from hub to outer edge -->
+  <line x1="490" y1="548" x2="490" y2="462" stroke="#c8921c" stroke-width="14" stroke-linecap="round"/>
+  <line x1="490" y1="648" x2="490" y2="734" stroke="#c8921c" stroke-width="14" stroke-linecap="round"/>
+  <line x1="440" y1="598" x2="354" y2="598" stroke="#c8921c" stroke-width="14" stroke-linecap="round"/>
+  <line x1="540" y1="598" x2="626" y2="598" stroke="#c8921c" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- Hub cap -->
+  <circle cx="490" cy="598" r="26" fill="url(#hub)"/>
+  <circle cx="490" cy="598" r="14" fill="#0c1420"/>
+  <circle cx="490" cy="598" r="6"  fill="url(#hub)"/>
+
+  <!-- Handle arm -->
+  <rect x="630" y="576" width="110" height="20" rx="10" fill="#d4a020"/>
+  <!-- Handle knob -->
+  <circle cx="745" cy="586" r="32" fill="#c8921c" stroke="#8a6010" stroke-width="3.5"/>
+  <circle cx="745" cy="586" r="20" fill="#141e2c"/>
+  <circle cx="745" cy="586" r="9"  fill="#c8921c"/>
+
+  <!-- Specular highlight on reel (upper-left white sheen) -->
+  <ellipse cx="420" cy="530" rx="48" ry="28" fill="white" opacity="0.07"
+           transform="rotate(-35,420,530)"/>
+
+  <!-- ── TANGLED FISHING LINES ──────────────────────────────────── -->
+  <!-- All lines are silver-white monofilament, varying opacity -->
+
+  <!-- Main line leaving spool toward rod tip -->
+  <path d="M 490 393  C 510 330  570 275  650 210"
+        fill="none" stroke="#dce8f8" stroke-width="3" stroke-linecap="round" opacity="0.92"/>
+
+  <!-- Tangle loop A — upper left, big lazy loop -->
+  <path d="M 360 480  C 280 430  240 350  278 285
+           C 316 220  400 225  430 278
+           C 460 330  428 400  380 428"
+        fill="none" stroke="#d0dced" stroke-width="2.8" stroke-linecap="round" opacity="0.82"/>
+
+  <!-- Tangle loop B — crosses loop A, tighter inner loop -->
+  <path d="M 330 450  C 268 490  248 568  284 622
+           C 320 676  394 670  418 618
+           C 440 568  406 516  358 524"
+        fill="none" stroke="#c4d0e4" stroke-width="2.4" stroke-linecap="round" opacity="0.72"/>
+
+  <!-- Tangle loop C — upper right, small bow -->
+  <path d="M 592 438  C 648 395  700 378  714 420
+           C 728 462  698 498  648 488
+           C 610 480  596 456  606 440"
+        fill="none" stroke="#ccd6ea" stroke-width="2.2" stroke-linecap="round" opacity="0.68"/>
+
+  <!-- Tangle loop D — lower right, loose loop -->
+  <path d="M 612 718  C 664 750  694 790  672 830
+           C 650 868  608 858  596 826
+           C 584 796  612 768  638 752"
+        fill="none" stroke="#c0cce0" stroke-width="2.2" stroke-linecap="round" opacity="0.62"/>
+
+  <!-- Short crossing segment — gives extra "tangled" intersection -->
+  <path d="M 302 366  C 342 400  338 452  308 472"
+        fill="none" stroke="#ccd6ea" stroke-width="2" stroke-linecap="round" opacity="0.58"/>
+
+  <!-- Another short crossing segment right side -->
+  <path d="M 614 502  C 594 534  602 566  628 574"
+        fill="none" stroke="#c4d0e4" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+</svg>
