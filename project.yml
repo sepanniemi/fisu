@@ -20,7 +20,8 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: fi.fisu.app
         INFOPLIST_FILE: Fisu/Info.plist
         CODE_SIGN_ENTITLEMENTS: Fisu/Fisu.entitlements
-        DEVELOPMENT_TEAM: "TD86CPC8QU"   # fill in your 10-char team ID
+        DEVELOPMENT_TEAM: "TD86CPC8QU"
+        CODE_SIGN_STYLE: Automatic
     dependencies:
       - sdk: PhotosUI.framework
   FisuTests:
