@@ -4,6 +4,9 @@ options:
   deploymentTarget:
     iOS: "26.0"
   createIntermediateGroups: true
+configFiles:
+  Debug: Local.xcconfig
+  Release: Local.xcconfig
 settings:
   base:
     SWIFT_VERSION: 6.2
@@ -20,7 +23,6 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: fi.fisu.app
         INFOPLIST_FILE: Fisu/Info.plist
         CODE_SIGN_ENTITLEMENTS: Fisu/Fisu.entitlements
-        DEVELOPMENT_TEAM: "ZX7D2LKGHP"
         CODE_SIGN_STYLE: Automatic
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     dependencies:
