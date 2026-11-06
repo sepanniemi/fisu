@@ -42,7 +42,9 @@ final class MapCoordinator: NSObject, MKMapViewDelegate {
         mapView.overlays.filter { $0 is MKPolyline }.forEach { mapView.removeOverlay($0) }
         guard routePoints.count >= 2 else { return }
         let coords = routePoints.map { CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lon) }
-        mapView.addOverlay(MKPolyline(coordinates: coords, count: coords.count), level: .aboveRoads)
+        // The MML topo tiles are opaque and sit at .aboveLabels, so anything at .aboveRoads is hidden
+        // beneath them. Overlays within a level stack in the order they were added: add the route last.
+        mapView.addOverlay(MKPolyline(coordinates: coords, count: coords.count), level: .aboveLabels)
     }
 
     // MARK: MKMapViewDelegate

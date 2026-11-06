@@ -38,6 +38,7 @@ struct MapContainerView: UIViewRepresentable {
     func updateUIView(_ map: MKMapView, context: Context) {
         syncOverlay(map)
         context.coordinator.syncAnnotations(mapView: map, catches: catches, displayMode: displayMode)
+        // After syncOverlay, so the route is appended above the tile overlay.
         context.coordinator.syncRoute(mapView: map, routePoints: routePoints)
     }
 
