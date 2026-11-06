@@ -7,10 +7,16 @@ final class MapCoordinator: NSObject, MKMapViewDelegate {
     var onCatchDeselected: () -> Void
     var displayMode: CatchDisplayMode = .dots
     var hasInitiallyCentered = false
+    let framesRoute: Bool
 
-    init(onCatchSelected: @escaping (Catch) -> Void, onCatchDeselected: @escaping () -> Void) {
+    init(
+        onCatchSelected: @escaping (Catch) -> Void,
+        onCatchDeselected: @escaping () -> Void,
+        framesRoute: Bool = false
+    ) {
         self.onCatchSelected = onCatchSelected
         self.onCatchDeselected = onCatchDeselected
+        self.framesRoute = framesRoute
     }
 
     func syncAnnotations(mapView: MKMapView, catches: [Catch], displayMode: CatchDisplayMode) {

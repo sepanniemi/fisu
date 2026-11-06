@@ -99,14 +99,75 @@ import MapKit
         #expect(routePolylines(on: map).isEmpty)
     }
 
+    // MARK: Framing the route (trip detail)
+
+    // The trip detail map used to stay on the default region (or the user's current position),
+    // so a recorded route was off screen unless you happened to be standing on it.
+    @Test @MainActor func tripDetailMapFramesTheWholeRoute() throws {
+        let map = makeMap()
+
+        makeCoordinator(framesRoute: true).syncRoute(mapView: map, routePoints: Self.route)
+
+        let polyline = try #require(routePolylines(on: map).first)
+        #expect(showsRoute(polyline, on: map), "the whole route must be on screen and fill the map")
+    }
+
+    // SwiftUI hands the map over before it has been laid out, i.e. with an empty frame.
+    @Test @MainActor func routeIsFramedOnceTheMapHasBeenLaidOut() async throws {
+        let map = MKMapView()
+        let coordinator = makeCoordinator(framesRoute: true)
+        coordinator.syncRoute(mapView: map, routePoints: Self.route)
+        let polyline = try #require(routePolylines(on: map).first)
+
+        map.frame = CGRect(x: 0, y: 0, width: 360, height: 220)
+        for _ in 0..<100 where !showsRoute(polyline, on: map) {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+
+        #expect(showsRoute(polyline, on: map), "the route should be framed once the map has a size")
+    }
+
+    @Test @MainActor func routeIsFramedOnlyOnce() throws {
+        let map = makeMap()
+        let coordinator = makeCoordinator(framesRoute: true)
+        coordinator.syncRoute(mapView: map, routePoints: Self.route)
+        let polyline = try #require(routePolylines(on: map).first)
+        #expect(showsRoute(polyline, on: map))
+
+        // The user pans away; later updates (every GPS fix, any state change) must not pull the map back.
+        map.setCenter(CLLocationCoordinate2D(latitude: 0, longitude: 0), animated: false)
+        let panned = map.visibleMapRect
+        coordinator.syncRoute(mapView: map, routePoints: Self.route)
+
+        #expect(map.visibleMapRect.origin.x == panned.origin.x)
+        #expect(map.visibleMapRect.origin.y == panned.origin.y)
+    }
+
+    @Test @MainActor func liveMapKeepsItsCameraWhenTheRouteChanges() {
+        let map = makeMap()
+        let before = map.visibleMapRect
+
+        makeCoordinator().syncRoute(mapView: map, routePoints: Self.route)
+
+        #expect(map.visibleMapRect.origin.x == before.origin.x)
+        #expect(map.visibleMapRect.origin.y == before.origin.y)
+    }
+
     // MARK: Helpers
 
     @MainActor private func makeMap() -> MKMapView {
         MKMapView(frame: CGRect(x: 0, y: 0, width: 360, height: 640))
     }
 
-    @MainActor private func makeCoordinator() -> MapCoordinator {
-        MapCoordinator(onCatchSelected: { _ in }, onCatchDeselected: {})
+    @MainActor private func makeCoordinator(framesRoute: Bool = false) -> MapCoordinator {
+        MapCoordinator(onCatchSelected: { _ in }, onCatchDeselected: {}, framesRoute: framesRoute)
+    }
+
+    // The whole route is on screen and fills the map instead of being a speck on a world map.
+    @MainActor private func showsRoute(_ polyline: MKPolyline, on map: MKMapView) -> Bool {
+        let route = polyline.boundingMapRect
+        let visible = map.visibleMapRect
+        return visible.contains(route) && visible.size.width < route.size.width * 2
     }
 
     private func makeTiles(key: String = "test-key") -> MMLTileOverlay {
