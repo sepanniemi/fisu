@@ -31,9 +31,11 @@ import MapKit
         #expect(url.path.contains("WGS84_Pseudo-Mercator"))
     }
 
-    @Test func overlayReplacesBaseContent() {
+    // The tiles are drawn on top of Apple's map instead of replacing it, so a failed tile
+    // load leaves the base map visible rather than a blank hole (a584f2d).
+    @Test func overlayDoesNotReplaceBaseContent() {
         let overlay = makeOverlay()
-        #expect(overlay.canReplaceMapContent == true)
+        #expect(overlay.canReplaceMapContent == false)
     }
 
     // Regression test: cache key must use z/y/x (matching URL), not z/x/y.
