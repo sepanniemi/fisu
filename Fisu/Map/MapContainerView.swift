@@ -8,9 +8,15 @@ struct MapContainerView: UIViewRepresentable {
     let apiKey: String
     let onCatchSelected: (Catch) -> Void
     let onCatchDeselected: () -> Void
+    /// Trip detail: show the whole route instead of centring on the user's current position.
+    var framesRoute = false
 
     func makeCoordinator() -> MapCoordinator {
-        MapCoordinator(onCatchSelected: onCatchSelected, onCatchDeselected: onCatchDeselected)
+        MapCoordinator(
+            onCatchSelected: onCatchSelected,
+            onCatchDeselected: onCatchDeselected,
+            framesRoute: framesRoute
+        )
     }
 
     func makeUIView(context: Context) -> MKMapView {

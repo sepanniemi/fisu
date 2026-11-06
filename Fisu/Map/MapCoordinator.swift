@@ -8,6 +8,7 @@ final class MapCoordinator: NSObject, MKMapViewDelegate {
     var displayMode: CatchDisplayMode = .dots
     var hasInitiallyCentered = false
     let framesRoute: Bool
+    private var hasFramedRoute = false
 
     init(
         onCatchSelected: @escaping (Catch) -> Void,
@@ -48,9 +49,33 @@ final class MapCoordinator: NSObject, MKMapViewDelegate {
         mapView.overlays.filter { $0 is MKPolyline }.forEach { mapView.removeOverlay($0) }
         guard routePoints.count >= 2 else { return }
         let coords = routePoints.map { CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lon) }
+        let polyline = MKPolyline(coordinates: coords, count: coords.count)
         // The MML topo tiles are opaque and sit at .aboveLabels, so anything at .aboveRoads is hidden
         // beneath them. Overlays within a level stack in the order they were added: add the route last.
-        mapView.addOverlay(MKPolyline(coordinates: coords, count: coords.count), level: .aboveLabels)
+        mapView.addOverlay(polyline, level: .aboveLabels)
+        if framesRoute { frameRoute(polyline.boundingMapRect, in: mapView) }
+    }
+
+    // Shows the whole route, once: syncRoute runs on every GPS fix and state change and must not
+    // undo the user's panning and zooming.
+    private func frameRoute(_ rect: MKMapRect, in mapView: MKMapView, retrying: Bool = true) {
+        guard !hasFramedRoute else { return }
+        guard !mapView.bounds.isEmpty else {
+            // SwiftUI hands the map over before it has a size; try again once it has been laid out.
+            if retrying {
+                Task { @MainActor [weak self, weak mapView] in
+                    guard let self, let mapView else { return }
+                    self.frameRoute(rect, in: mapView, retrying: false)
+                }
+            }
+            return
+        }
+        hasFramedRoute = true
+        mapView.setVisibleMapRect(
+            rect,
+            edgePadding: UIEdgeInsets(top: 24, left: 24, bottom: 24, right: 24),
+            animated: false
+        )
     }
 
     // MARK: MKMapViewDelegate
@@ -90,7 +115,7 @@ final class MapCoordinator: NSObject, MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        guard !hasInitiallyCentered, let loc = userLocation.location else { return }
+        guard !hasInitiallyCentered, !hasFramedRoute, let loc = userLocation.location else { return }
         let region = MKCoordinateRegion(
             center: loc.coordinate,
             span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)

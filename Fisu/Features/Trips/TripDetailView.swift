@@ -22,7 +22,8 @@ struct TripDetailView: View {
                     routePoints: routePoints,
                     apiKey: KeychainStore.mmlApiKey ?? "",
                     onCatchSelected: { _ in },
-                    onCatchDeselected: {}
+                    onCatchDeselected: {},
+                    framesRoute: true
                 )
                 .frame(height: 220)
 
